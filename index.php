@@ -75,10 +75,12 @@ session_start();
                           $user_nip = $row['nip'];
                           $user_name = $row['nama'];
                           $user_status = $row['status'];
+                          $user_profile = $row['img_profile'];
 
                           $_SESSION["user_nip"] = $user_nip;
                           $_SESSION["user_nama"] = $user_name;
                           $_SESSION["user_status"] = $user_status;
+                          $_SESSION["user_profile"] = $user_profile;
                         }
                         header("Location:dashboard.php");
                       } else {
