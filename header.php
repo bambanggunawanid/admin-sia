@@ -50,14 +50,14 @@ session_start();
 
       <!-- Nav Item - Charts -->
       <li class="nav-item">
-        <a class="nav-link" href="charts.html">
-          <i class="fas fa-fw fa-chart-area"></i>
+        <a class="nav-link" href="guru.php">
+          <i class="fas fa-fw fa-user"></i>
           <span>Data Guru</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="charts.html">
-          <i class="fas fa-fw fa-chart-area"></i>
-          <span>Data Siswa</span></a>
+        <a class="nav-link" href="mapel.php">
+          <i class="fas fa-fw fa-tasks"></i>
+          <span>Data Mapel</span></a>
       </li>
 
       <li class="nav-item">
@@ -70,6 +70,7 @@ session_start();
         if (isset($_POST['logout_btn'])) {
           $_SESSION['user_nip'] == null;
           session_destroy();
+          header("Location:index.php");
         }
 
 

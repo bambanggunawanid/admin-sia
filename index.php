@@ -1,5 +1,5 @@
-<?php include "db.php"?>
-<?php ob_start();?>
+<?php include "db.php" ?>
+<?php ob_start(); ?>
 <?php
 session_start();
 ?>
@@ -48,7 +48,7 @@ session_start();
                       <input required name="input_nip" type="text" class="form-control form-control-user" id="exampleInputNIP" aria-describedby="nipHelp" placeholder="Masukkan NIP anda...">
                     </div>
                     <div class="form-group">
-                      <input required name="input_pass"  type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
+                      <input required name="input_pass" type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
                     </div>
                     <button type="submit" name="login_btn" class="btn btn-primary btn-user btn-block">
                       Login
@@ -60,43 +60,36 @@ session_start();
                   </div>
 
                   <?php
-              if(isset($_POST['login_btn']))
-              {
-                $nip = $_POST['input_nip'];
-                $pass = $_POST['input_pass'];
+                  if (isset($_POST['login_btn'])) {
+                    $nip = $_POST['input_nip'];
+                    $pass = $_POST['input_pass'];
 
-                $login_query = "SELECT * FROM tb_guru WHERE nip='$nip' and pass='$pass'";
+                    $login_query = "SELECT * FROM tb_guru WHERE nip='$nip' and pass='$pass'";
 
-                $result = mysqli_query($connection,$login_query);
+                    $result = mysqli_query($connection, $login_query);
 
-                if($result)
-                {
-                  $num_rows = mysqli_num_rows($result);
-                  if($num_rows == 1)
-                  {
-                    while($row = mysqli_fetch_array($result))
-                    {
-                        $user_nip = $row['nip'];
-                        $user_name = $row['nama'];
+                    if ($result) {
+                      $num_rows = mysqli_num_rows($result);
+                      if ($num_rows == 1) {
+                        while ($row = mysqli_fetch_array($result)) {
+                          $user_nip = $row['nip'];
+                          $user_name = $row['nama'];
+                          $user_status = $row['status'];
 
-                        $_SESSION["user_nip"] = $user_nip;
-                        $_SESSION["user_nama"] = $user_name;
-                    }
-                  header("Location:dashboard.php");
-                  }
-                  else
-                  {
-                    echo "<script>
+                          $_SESSION["user_nip"] = $user_nip;
+                          $_SESSION["user_nama"] = $user_name;
+                          $_SESSION["user_status"] = $user_status;
+                        }
+                        header("Location:dashboard.php");
+                      } else {
+                        echo "<script>
                     alert('User name and password invalid');
                     </script>";
+                      }
+                    } else {
+                      echo "Error" . mysqli_error($connection);
+                    }
                   }
-
-                }
-                else
-                {
-                  echo "Error".mysqli_error($connection);
-                }
-              }
                   ?>
                 </div>
               </div>
