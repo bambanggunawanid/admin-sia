@@ -9,7 +9,7 @@ if (hapus_mengajar($id) > 0) {
         document.location.href = 'index.php';
     </script>
     ";
-    header("Location:mapel.php");
+    header("Location:dashboard.php");
 } else {
     echo "
     <script>
@@ -17,5 +17,5 @@ if (hapus_mengajar($id) > 0) {
         document.location.href = 'index.php';
     </script>
     ";
-    header("Location:mapel.php");
+    header("Location:dashboard.php");
 }

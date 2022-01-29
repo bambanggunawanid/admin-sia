@@ -52,7 +52,7 @@
                       <button type="button" class="btn btn-warning mr-2" data-toggle="modal" data-target="#editModal">
                         Ubah
                       </button>
-                      <a href="hapus_mengajar.php?id=<?= $row["id_ajar"] ?>" class="btn btn-danger" onclick="return confirm('Apakah anda yakin?')">Hapus</a>
+                      <a href="hapus_mengajar.php?id=<?= $r["id_ajar"] ?>" class="btn btn-danger" onclick="return confirm('Apakah anda yakin?')">Hapus</a>
                     </td>
                   </tr>
                 <?php endforeach; ?>
@@ -72,7 +72,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="editModal">Ubah data akun</h5>
+        <h5 class="modal-title" id="editModal">Ubah jadwal mengajar</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -80,43 +80,45 @@
       <form action="" method="post">
         <div class="modal-body">
           <div class="form-group">
-            <input type="text" class="form-control" id="nip_lama" name="nip_lama" placeholder="NIP lama">
+            <label for="id_ajar">ID lama</label>
+            <input type="text" class="form-control" id="id_ajar" name="id_ajar" placeholder="ID ajar">
           </div>
           <div class="form-group">
-            <input type="text" class="form-control" id="nip_baru" name="nip_baru" placeholder="NIP baru">
+            <label for="hari">Hari mengajar</label>
+            <select name="hari" class="form-control">
+              <option value="Senin">Senin</option>
+              <option value="Selasa">Selasa</option>
+              <option value="Rabu">Rabu</option>
+              <option value="Kamis">Kamis</option>
+              <option value="Jumat">Jumat</option>
+            </select>
           </div>
           <div class="form-group">
-            <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama anda">
+            <label for="jam">Durasi mengajar</label>
+            <input type="number" class="form-control" id="jam" name="jam" placeholder="Durasi mengajar">
           </div>
           <div class="form-group">
-            <input type="text" class="form-control" id="password" name="password" placeholder="Password anda">
+            <?php
+            $sql_guru = "SELECT * FROM tb_guru";
+            $result_guru = mysqli_query($connection, $sql_guru);
+            ?>
+            <label for="nip">Nama guru</label>
+            <select name="nip" class="form-control">
+              <?php foreach ($result_guru as $rg) : ?>
+                <option value="<?= $rg['nip'] ?>"><?= $rg['nama'] ?></option>
+              <?php endforeach; ?>
+            </select>
           </div>
           <div class="form-group">
-            <input type="text" class="form-control" id="tmp_lahir" name="tmp_lahir" placeholder="Tempat lahir">
-          </div>
-          <div class="form-group">
-            <input type="date" class="form-control" id="tgl_lahir" name="tgl_lahir" placeholder="Tanggal lahir">
-          </div>
-          <div class="form-group">
-            <input type="text" class="form-control" id="alamat" name="alamat" placeholder="Alamat">
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefaultA" value="Laki-laki">
-            <label class="form-check-label" for="flexRadioDefaultA">
-              Laki-laki
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefaultB" value="Perempuan">
-            <label class="form-check-label" for="flexRadioDefaultB">
-              Perempuan
-            </label>
-          </div>
-          <div class="form-group">
-            <select name="status" class="form-control">
-              <option value="admin">Admin</option>
-              <option value="guru">Guru</option>
-              <option value="guru_biasa">Guru biasa</option>
+            <label for="kode_mapel">Nama mapel</label>
+            <select name="kode_mapel" class="form-control">
+              <?php
+              $sql_mapel = "SELECT * FROM tb_mapel";
+              $result_mapel = mysqli_query($connection, $sql_mapel);
+              ?>
+              <?php foreach ($result_mapel as $rm) : ?>
+                <option value="<?= $rm['kode_mapel'] ?>"><?= $rm['nama_mapel'] ?></option>
+              <?php endforeach; ?>
             </select>
           </div>
         </div>
@@ -130,19 +132,15 @@
 </div>
 <?php
 if (isset($_POST['submit_edit_modal'])) {
-  $nip_lama = $_POST['nip_lama'];
-  $nip_baru = $_POST['nip_baru'];
-  $nama = $_POST['nama'];
-  $pass = $_POST['password'];
-  $tmp_lahir = $_POST['tmp_lahir'];
-  $tgl_lahir = $_POST['tgl_lahir'];
-  $alamat = $_POST['alamat'];
-  $jenis_kelamin = $_POST['flexRadioDefault'];
-  $status = $_POST['status'];
-  $sql_edit = "UPDATE tb_guru SET nip = '$nip_baru', nama = '$nama', pass = '$pass', tmp_lahir = '$tmp_lahir', tgl_lahir = '$tgl_lahir', alamat = '$alamat', jenis_kelamin = '$jenis_kelamin', status='$status' WHERE `tb_guru`.`nip` = '$nip_lama'";
+  $id_ajar = $_POST['id_ajar'];
+  $hari = $_POST['hari'];
+  $jam = $_POST['jam'];
+  $nip = $_POST['nip'];
+  $kode_mapel = $_POST['kode_mapel'];
+  $sql_edit = "UPDATE tb_mengajar SET hari='$hari', jam='$jam', nip='$nip', kode_mapel='$kode_mapel' WHERE `tb_mengajar`.`id_ajar` = '$id_ajar'";
 
   if (mysqli_query($connection, $sql_edit)) {
-    header("Location:guru.php");
+    header("Location:dashboard.php");
   } else {
     echo "Error: " . $sql_edit . "<br>" . mysqli_error($connection);
   }
@@ -161,13 +159,34 @@ if (isset($_POST['submit_edit_modal'])) {
       <form action="" method="post">
         <div class="modal-body">
           <div class="form-group">
-            <input type="text" class="form-control" id="hari" name="hari" placeholder="Hari">
+            <?php
+            $sql_guru = "SELECT * FROM tb_guru";
+            $result_guru = mysqli_query($connection, $sql_guru);
+            ?>
+            <label for="nip">Nama guru</label>
+            <select name="nip" class="form-control">
+              <?php foreach ($result_guru as $rg) : ?>
+                <option value="<?= $rg['nip'] ?>"><?= $rg['nama'] ?></option>
+              <?php endforeach; ?>
+            </select>
           </div>
           <div class="form-group">
-            <input type="text" class="form-control" id="jam" name="jam" placeholder="Durasi (jam)">
+            <label for="hari">Hari mengajar</label>
+            <select name="hari" class="form-control">
+              <option value="Senin">Senin</option>
+              <option value="Selasa">Selasa</option>
+              <option value="Rabu">Rabu</option>
+              <option value="Kamis">Kamis</option>
+              <option value="Jumat">Jumat</option>
+            </select>
           </div>
           <div class="form-group">
-            <select name="nama_mapel" id="nama_mapel" class="form-control">
+            <label for="jam">Durasi mengajar</label>
+            <input type="number" class="form-control" id="jam" name="jam" placeholder="Durasi (jam)">
+          </div>
+          <div class="form-group">
+            <label for="kode_mapel">Nama mapel</label>
+            <select name="kode_mapel" id="kode_mapel" class="form-control">
               <?php foreach ($result_mapel as $rm) : ?>
                 <option value="<?= $rm['kode_mapel'] ?>"><?= $rm['nama_mapel'] ?></option>
               <?php endforeach; ?>
@@ -184,10 +203,10 @@ if (isset($_POST['submit_edit_modal'])) {
 </div>
 <?php
 if (isset($_POST['submit_btn_modal'])) {
-  $nip = $_SESSION['user_nip'];
+  $nip = $_POST['nip'];
   $hari = $_POST['hari'];
   $jam = $_POST['jam'];
-  $kode_mapel = $_POST['nama_mapel'];
+  $kode_mapel = $_POST['kode_mapel'];
   $sql = "INSERT INTO tb_mengajar (id_ajar, hari, jam, nip, kode_mapel) VALUES (NULL, '$hari', '$jam', '$nip', '$kode_mapel')";
 
   if (mysqli_query($connection, $sql)) {
