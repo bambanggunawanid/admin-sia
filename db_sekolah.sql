@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 28, 2022 at 06:39 PM
+-- Generation Time: Jan 29, 2022 at 07:32 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.1
 
@@ -45,7 +45,8 @@ CREATE TABLE `tb_guru` (
 
 INSERT INTO `tb_guru` (`nip`, `nama`, `pass`, `tmp_lahir`, `tgl_lahir`, `alamat`, `jenis_kelamin`, `status`, `img_profile`) VALUES
 ('10000001', 'Suyono', '123', 'Sidoarjo', '1970-01-04', 'Jl. Merpati putih', 'Laki-laki', 'admin', 'profile-default.jpg'),
-('10000002', 'Indah Maysari', '123', 'Jakarta', '1990-06-06', 'Jl. Ikan paus', 'Perempuan', 'guru', 'profile-default.jpg');
+('10000002', 'Indah Maysari', '123', 'Jakarta', '1990-06-06', 'Jl. Ikan paus', 'Perempuan', 'guru', 'profile-default.jpg'),
+('10000003', 'Neneng', '123', 'Bandung', '1990-06-06', 'Jl. Ikan paus', 'Perempuan', 'guru biasa', 'profile-default.jpg');
 
 -- --------------------------------------------------------
 
@@ -64,7 +65,9 @@ CREATE TABLE `tb_mapel` (
 --
 
 INSERT INTO `tb_mapel` (`kode_mapel`, `nama_mapel`, `deskripsi`) VALUES
-(10001, 'Sosiologi', 'Mata pelajaran ini membahas tentang karakteristik masyarakat pedesaan yang meliputi kelompok dan organisasi, status dan stratifikasi, kekuasaan dan wewenang, struktur dan mobilitas, kemiskinan serta pola komunikasi di pedesaan. Konsep pemberdayaan masyarakat, tahapan pemberdayaan, model-model pemberdayaan masyarakat pengembangan masyarakat sebagai proses perubahan sosial, meningkatkan partisipasi masyarakat dalam upaya pengembangan peternakan berbasis potensi wilayah pedesaan.\r\n\r\n');
+(10001, 'Sosiologi', 'Mata pelajaran ini membahas tentang karakteristik masyarakat pedesaan yang meliputi kelompok dan organisasi, status dan stratifikasi, kekuasaan dan wewenang, struktur dan mobilitas, kemiskinan serta pola komunikasi di pedesaan. Konsep pemberdayaan masyarakat, tahapan pemberdayaan, model-model pemberdayaan masyarakat pengembangan masyarakat sebagai proses perubahan sosial, meningkatkan partisipasi masyarakat dalam upaya pengembangan peternakan berbasis potensi wilayah pedesaan.\r\n\r\n'),
+(10002, 'Biologi', 'Biologi'),
+(10003, 'Matematika', 'Matematika');
 
 -- --------------------------------------------------------
 
@@ -85,16 +88,14 @@ CREATE TABLE `tb_mengajar` (
 --
 
 INSERT INTO `tb_mengajar` (`id_ajar`, `hari`, `jam`, `nip`, `kode_mapel`) VALUES
-(1, 'Senin', 2, '10000001', 10001),
-(2, 'Selasa', 2, '10000002', 10003),
-(3, 'Selasa', 2, '10000001', 10003),
-(4, 'Rabu', 2, '10000001', 10003),
-(5, 'Rabu', 2, '10000001', 10003),
+(1, 'Rabu', 2, '10000002', 10001),
 (6, 'Senin', 1, '10000001', 10001),
 (7, 'Senin', 1, '10000001', 10001),
-(8, 'Rabu', 3, '10000001', 10004),
+(8, 'Rabu', 3, '10000001', 10003),
 (9, 'Kamis', 3, '10000001', 10002),
-(10, 'Senin', 4, '10000001', 10005);
+(10, 'Senin', 4, '10000001', 10003),
+(13, 'Kamis', 3, '10000002', 10002),
+(14, 'Senin', 1, '10000003', 10001);
 
 --
 -- Indexes for dumped tables
@@ -127,7 +128,7 @@ ALTER TABLE `tb_mengajar`
 -- AUTO_INCREMENT for table `tb_mengajar`
 --
 ALTER TABLE `tb_mengajar`
-  MODIFY `id_ajar` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_ajar` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
