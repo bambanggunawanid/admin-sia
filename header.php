@@ -20,7 +20,7 @@ session_start();
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
   <link rel="shortcut icon" href="img/logo.png" type="image/x-icon">
   <!-- Custom styles for this template-->
-  <link href="css/sb-admin-2.min.css" rel="stylesheet">
+  <link href="css/sb-admin-2.css" rel="stylesheet">
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 </head>
 
@@ -28,13 +28,12 @@ session_start();
   <div id="wrapper">
     <!-- Sidebar -->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
       <!-- Sidebar - Brand -->
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-laugh-wink"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">SIA</div>
+        <div class="sidebar-brand-text mx-3">SISTEM AKADEMIK</div>
       </a>
 
       <!-- Divider -->
@@ -46,18 +45,19 @@ session_start();
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
       </li>
-
-      <!-- Nav Item - Charts -->
-      <li class="nav-item">
-        <a class="nav-link" href="guru.php">
-          <i class="fas fa-fw fa-user"></i>
-          <span>Data Guru</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="mapel.php">
-          <i class="fas fa-fw fa-tasks"></i>
-          <span>Data Mapel</span></a>
-      </li>
+      <?php if ($_SESSION['user_status'] == "admin") : ?>
+        <!-- Nav Item - Charts -->
+        <li class="nav-item">
+          <a class="nav-link" href="guru.php">
+            <i class="fas fa-fw fa-user"></i>
+            <span>Data Guru</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="mapel.php">
+            <i class="fas fa-fw fa-tasks"></i>
+            <span>Data Mapel</span></a>
+        </li>
+      <?php endif; ?>
       <script>
         $(document).ready(function() {
           $.each($('#accordionSidebar').find('li'), function() {
@@ -66,23 +66,18 @@ session_start();
           });
         });
       </script>
-
       <li class="nav-item">
         <form action="" method="POST">
           <button type="submit" name="logout_btn" class="btn text-white mx-2">Logout</button></a>
         </form>
-
         <?php
         if (isset($_POST['logout_btn'])) {
           $_SESSION['user_nip'] == null;
           session_destroy();
           header("Location:index.php");
         }
-
-
         ?>
       </li>
-
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
 
@@ -92,13 +87,6 @@ session_start();
       </div>
 
     </ul>
-
-    <!-- Page Wrapper -->
-
-
-
-    <!-- End of Sidebar -->
-
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
 
@@ -131,8 +119,17 @@ session_start();
                 </a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Logout
+                  <form action="" method="POST">
+                    <button type="submit" name="logout_btn" class="btn mx-2">Logout</button>
+                  </form>
+                </a>
+                <?php
+                if (isset($_POST['logout_btn'])) {
+                  $_SESSION['user_nip'] == null;
+                  session_destroy();
+                  header("Location:index.php");
+                }
+                ?>
                 </a>
               </div>
             </li>

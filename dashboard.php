@@ -6,13 +6,26 @@
     <!-- Begin Page Content -->
     <div class="container-fluid">
       <?php
-      $join_query = "SELECT `tb_mengajar` . * ,`tb_guru` . *, `tb_mapel` . *
-      FROM `tb_mengajar`
-      JOIN `tb_guru`
-          ON `tb_guru` . `nip` = `tb_mengajar` . `nip`
-      JOIN `tb_mapel`
-          ON `tb_mapel` . `kode_mapel` = `tb_mengajar` . `kode_mapel`";
-      $result = mysqli_query($connection, $join_query);
+      if ($_SESSION['user_status'] == "admin" || $_SESSION['user_status'] == "guru") {
+        $join_query = "SELECT `tb_mengajar` . * ,`tb_guru` . *, `tb_mapel` . *
+        FROM `tb_mengajar`
+        JOIN `tb_guru`
+            ON `tb_guru` . `nip` = `tb_mengajar` . `nip`
+        JOIN `tb_mapel`
+            ON `tb_mapel` . `kode_mapel` = `tb_mengajar` . `kode_mapel`";
+        $result = mysqli_query($connection, $join_query);
+      }else{
+        $status_guru_biasa = $_SESSION['user_status'];
+        $join_query_guru_biasa = "SELECT `tb_mengajar` . * ,`tb_guru` . *, `tb_mapel` . *
+        FROM `tb_mengajar`
+        JOIN `tb_guru`
+            ON `tb_guru` . `nip` = `tb_mengajar` . `nip`
+        JOIN `tb_mapel`
+            ON `tb_mapel` . `kode_mapel` = `tb_mengajar` . `kode_mapel`
+        WHERE `tb_guru`.`status`='$status_guru_biasa'";
+        $result = mysqli_query($connection, $join_query_guru_biasa);
+      }
+
       ?>
       <!-- Page Heading -->
       <h1 class="h3 text-gray-800">Selamat datang, <?= $_SESSION['user_nama'] ?> </h1>
@@ -35,7 +48,9 @@
                   <th>Durasi</th>
                   <th>Nama Guru</th>
                   <th>NIP</th>
-                  <th>Action</th>
+                  <?php if ($_SESSION['user_status'] == "admin") : ?>
+                    <th>Action</th>
+                  <?php endif; ?>
                 </tr>
               </thead>
               <tbody>
@@ -48,12 +63,14 @@
                     <td><?php print_r($r['jam']) ?> Jam</td>
                     <td><?php print_r($r['nama']) ?></td>
                     <td><?php print_r($r['nip']) ?></td>
-                    <td class="col-xl-2 text-center">
-                      <button type="button" class="btn btn-warning mr-2" data-toggle="modal" data-target="#editModal">
-                        Ubah
-                      </button>
-                      <a href="hapus_mengajar.php?id=<?= $r["id_ajar"] ?>" class="btn btn-danger" onclick="return confirm('Apakah anda yakin?')">Hapus</a>
-                    </td>
+                    <?php if ($_SESSION['user_status'] == "admin") : ?>
+                      <td class="col-xl-2 text-center">
+                        <button type="button" class="btn btn-warning mr-2" data-toggle="modal" data-target="#editModal">
+                          Ubah
+                        </button>
+                        <a href="hapus_mengajar.php?id=<?= $r["id_ajar"] ?>" class="btn btn-danger" onclick="return confirm('Apakah anda yakin?')">Hapus</a>
+                      </td>
+                    <?php endif; ?>
                   </tr>
                 <?php endforeach; ?>
               </tbody>
