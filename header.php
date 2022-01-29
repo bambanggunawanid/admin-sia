@@ -5,6 +5,7 @@ session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,7 +21,7 @@ session_start();
   <link rel="shortcut icon" href="img/logo.png" type="image/x-icon">
   <!-- Custom styles for this template-->
   <link href="css/sb-admin-2.min.css" rel="stylesheet">
-
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 </head>
 
 <body id="page-top">
@@ -40,8 +41,8 @@ session_start();
       <hr class="sidebar-divider my-0">
 
       <!-- Nav Item - Dashboard -->
-      <li class="nav-item active">
-        <a class="nav-link" href="dashboard.php">
+      <li class="nav-item">
+        <a class="nav-link " href="dashboard.php">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
       </li>
@@ -57,6 +58,14 @@ session_start();
           <i class="fas fa-fw fa-tasks"></i>
           <span>Data Mapel</span></a>
       </li>
+      <script>
+        $(document).ready(function() {
+          $.each($('#accordionSidebar').find('li'), function() {
+            $(this).toggleClass('active',
+              window.location.pathname.indexOf($(this).find('a').attr('href')) > -1);
+          });
+        });
+      </script>
 
       <li class="nav-item">
         <form action="" method="POST">
@@ -64,7 +73,6 @@ session_start();
         </form>
 
         <?php
-
         if (isset($_POST['logout_btn'])) {
           $_SESSION['user_nip'] == null;
           session_destroy();

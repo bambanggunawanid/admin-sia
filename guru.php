@@ -49,62 +49,16 @@ $result_guru = mysqli_query($connection, $guru_query); ?>
                     <button type="button" class="btn btn-warning mr-2" data-toggle="modal" data-target="#editModal">
                       Ubah
                     </button>
-                    <!-- Modal Edit-->
-                    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModal" aria-hidden="true">
-                      <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 class="modal-title" id="editModal">Ubah data akun</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                          </div>
-                          <form action="" method="post">
-                            <div class="modal-body">
-                              <div class="form-group">
-                                <input type="text" class="form-control" id="nip_lama" name="nip_lama" placeholder="NIP lama">
-                              </div>
-                              <div class="form-group">
-                                <input type="text" class="form-control" id="nip_baru" name="nip_baru" placeholder="NIP baru">
-                              </div>
-                              <div class="form-group">
-                                <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama anda">
-                              </div>
-                              <div class="form-group">
-                                <input type="text" class="form-control" id="tmp_lahir" name="tmp_lahir" placeholder="Tempat lahir">
-                              </div>
-                              <div class="form-group">
-                                <input type="text" class="form-control" id="tgl_lahir" name="tgl_lahir" placeholder="Tanggal lahir">
-                              </div>
-                              <div class="form-group">
-                                <input type="text" class="form-control" id="jenis_kelamin" name="jenis_kelamin" placeholder="Jenis kelamin">
-                              </div>
-                              <div class="form-group">
-                                <input type="text" class="form-control" id="status" name="status" placeholder="Status akun">
-                              </div>
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                              <button type="submit" class="btn btn-success" name="submit_btn_modal">Simpan Perubahan</button>
-                            </div>
-                          </form>
-                        </div>
-                      </div>
-                    </div>
-
                     <!-- Delete -->
                     <a href="hapus_guru.php?id=<?= $row["nip"] ?>" class="btn btn-danger" onclick="return confirm('Apakah anda yakin?')">Hapus</a>
                   </td>
                 </tr>
-
             <?php
                 $i++;
               }
             } else {
               echo "Error :" . mysqli_error($connection);
             }
-
-
             ?>
           </tbody>
         </table>
@@ -113,9 +67,64 @@ $result_guru = mysqli_query($connection, $guru_query); ?>
   </div>
 </div>
 <!-- /.container-fluid -->
-
+<!-- Modal Edit-->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModal">Ubah data akun</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="" method="post">
+        <div class="modal-body">
+          <div class="form-group">
+            <input type="text" class="form-control" id="nip_lama" name="nip_lama" placeholder="NIP lama">
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" id="nip_baru" name="nip_baru" placeholder="NIP baru">
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama anda">
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" id="tmp_lahir" name="tmp_lahir" placeholder="Tempat lahir">
+          </div>
+          <div class="form-group">
+            <input type="date" class="form-control" id="tgl_lahir" name="tgl_lahir" placeholder="Tanggal lahir">
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" id="Alamat" name="Alamat" placeholder="Alamat">
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefaultA">
+            <label class="form-check-label" for="flexRadioDefaultA">
+              Laki-laki
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefaultB">
+            <label class="form-check-label" for="flexRadioDefaultB">
+              Perempuan
+            </label>
+          </div>
+          <div class="form-group">
+            <select name="status" id="status" class="form-control">
+              <option value="admin">Admin</option>
+              <option value="guru">Guru</option>
+              <option value="guru_biasa">Guru biasa</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-success" name="submit_btn_modal">Simpan Perubahan</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
-<!-- End of Main Content -->
 
 <!-- Modal -->
 <div class="modal fade" id="newSubMenuModal" tabindex="-1" role="dialog" aria-labelledby="newSubMenuModalLabel" aria-hidden="true">
@@ -130,22 +139,22 @@ $result_guru = mysqli_query($connection, $guru_query); ?>
       <form action="" method="post">
         <div class="modal-body">
           <div class="form-group">
-            <input type="text" class="form-control" id="nip" name="nip" placeholder="NIP">
+            <input type="text" class="form-control" name="nip" placeholder="NIP">
           </div>
           <div class="form-group">
-            <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama anda">
+            <input type="text" class="form-control" name="nama" placeholder="Nama anda">
           </div>
           <div class="form-group">
-            <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+            <input type="password" class="form-control" name="password" placeholder="Password">
           </div>
           <div class="form-group">
-            <input type="text" class="form-control" id="tmp_lahir" name="tmp_lahir" placeholder="Tempat lahir">
+            <input type="text" class="form-control" name="tmp_lahir" placeholder="Tempat lahir">
           </div>
           <div class="form-group">
-            <input type="date" class="form-control" id="tgl_lahir" name="tgl_lahir" placeholder="Tanggal lahir">
+            <input type="date" class="form-control" name="tgl_lahir" placeholder="Tanggal lahir">
           </div>
           <div class="form-group">
-            <input type="text" class="form-control" id="alamat" name="alamat" placeholder="Alamat">
+            <input type="text" class="form-control" name="alamat" placeholder="Alamat">
           </div>
           <div class="form-check">
             <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
@@ -161,9 +170,9 @@ $result_guru = mysqli_query($connection, $guru_query); ?>
           </div>
           <div class="form-group">
             <select name="status" id="status" class="form-control">
-                <option value="admin">Admin</option>
-                <option value="guru">Guru</option>
-                <option value="guru_biasa">Guru biasa</option>
+              <option value="admin">Admin</option>
+              <option value="guru">Guru</option>
+              <option value="guru_biasa">Guru biasa</option>
             </select>
           </div>
         </div>
