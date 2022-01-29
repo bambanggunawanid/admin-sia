@@ -92,72 +92,29 @@ function hapus_guru($id){
     mysqli_query($connection, "DELETE FROM tb_guru WHERE nip= $id");
     return mysqli_affected_rows($connection);
 }
-function ubah($data){
+function hapus_mengajar($id){
+    global $connection;
+    mysqli_query($connection, "DELETE FROM tb_mengajar WHERE id_ajar= $id");
+    return mysqli_affected_rows($connection);
+}
+function ubah_guru($data){
     global $connection;
 
-    $id = $data["id"];
-    $nim = htmlspecialchars ($data["nim"]);
+    $nip = $data["id"];
     $nama = htmlspecialchars ($data["nama"]);
-    $email = htmlspecialchars ($data["email"]);
+    $pass = htmlspecialchars ($data["email"]);
     $jurusan= htmlspecialchars ($data["jurusan"]);
 
     $gambarLama = htmlspecialchars($data["gambarLama"]);
 
-    // cek apakah user pilih gambar baru atau tidak
-    if ($_FILES['gambar']['error'] === 4) {
-        $gambar = $gambarLama;
-    }else {
-        $gambar = upload();
-
-    }
-
-    $query ="UPDATE mahasiswa SET
-        nim = '$nim',
+    $query ="UPDATE db_sekolah SET
+        nim = '$nip',
         nama = '$nama',
         jurusan = '$jurusan',
-        gambar = '$gambar'
-        WHERE id = $id
+        WHERE nip = $nip
     ";
 
     mysqli_query($connection,$query);
     return mysqli_affected_rows($connection);
 }
-
-function cari($keyword){
-    $query = "SELECT * FROM mahasiswa WHERE nama LIKE '%$keyword%' OR nim LIKE '%$keyword%' OR email LIKE '%$keyword%' OR jurusan LIKE '%$keyword%' ";
-    return query($query);
-}
-
-function registrasi($data){
-    global $connection;
-    $username = strtolower(stripslashes($data["username"]));
-    $password = mysqli_real_escape_string($connection,$data["password"]);
-    $passwordKonfirmasi = mysqli_real_escape_string($connection,$data["passwordKonfirmasi"]);
-
-    //cek username sudah ada atau belum?
-    $result = mysqli_query($connection,"SELECT username FROM user WHERE username='$username'");
-
-    if (mysqli_fetch_assoc($result)) {
-        echo "<script>
-            alert('Username sudah terdaftar!')
-            </script>
-        ";
-        return false;
-    }
-    //cek konfirmasi password
-    if ($password !== $passwordKonfirmasi) {
-        echo "<script>
-            alert('Password tidak sama!');
-            </script>
-        ";
-        return false;
-    }
-    // enkripsi password
-    $password = password_hash($password,PASSWORD_DEFAULT);
-
-    // tambah ke database
-    mysqli_query($connection,"INSERT INTO user VALUES ('','$username','$password')");
-    return mysqli_affected_rows($connection);
-}
-
 ?>

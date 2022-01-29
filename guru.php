@@ -98,16 +98,16 @@ $result_guru = mysqli_query($connection, $guru_query); ?>
             <input type="date" class="form-control" id="tgl_lahir" name="tgl_lahir" placeholder="Tanggal lahir">
           </div>
           <div class="form-group">
-            <input type="text" class="form-control" id="Alamat" name="Alamat" placeholder="Alamat">
+            <input type="text" class="form-control" id="alamat" name="alamat" placeholder="Alamat">
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefaultA">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefaultA" value="Laki-laki">
             <label class="form-check-label" for="flexRadioDefaultA">
               Laki-laki
             </label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefaultB">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefaultB" value="Perempuan">
             <label class="form-check-label" for="flexRadioDefaultB">
               Perempuan
             </label>
@@ -139,12 +139,12 @@ if (isset($_POST['submit_edit_modal'])) {
   $alamat = $_POST['alamat'];
   $jenis_kelamin = $_POST['flexRadioDefault'];
   $status = $_POST['status'];
-  $sql = "UPDATE tb_guru SET nip = '$nip_baru', nama = '$nama', pass = '$pass', tmp_lahir = '$tmp_lahir', tgl_lahir = '$tgl_lahir', alamat = '$alamat', jenis_kelamin = '$jenis_kelamin', status='$status' WHERE `tb_guru`.`nip` = '$nip_lama'";
+  $sql_edit = "UPDATE tb_guru SET nip = '$nip_baru', nama = '$nama', pass = '$pass', tmp_lahir = '$tmp_lahir', tgl_lahir = '$tgl_lahir', alamat = '$alamat', jenis_kelamin = '$jenis_kelamin', status='$status' WHERE `tb_guru`.`nip` = '$nip_lama'";
 
-  if (mysqli_query($connection, $sql)) {
+  if (mysqli_query($connection, $sql_edit)) {
     header("Location:guru.php");
   } else {
-    echo "Error: " . $sql . "<br>" . mysqli_error($connection);
+    echo "Error: " . $sql_edit . "<br>" . mysqli_error($connection);
   }
 }
 ?>
@@ -180,13 +180,13 @@ if (isset($_POST['submit_edit_modal'])) {
             <input type="text" class="form-control" name="alamat" placeholder="Alamat">
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+            <input class="form-check-input" type="radio" name="flexRadio" id="flexRadioDefault1" value="Laki-laki">
             <label class="form-check-label" for="flexRadioDefault1">
               Laki-laki
             </label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+            <input class="form-check-input" type="radio" name="flexRadio" id="flexRadioDefault2" value="Perempuan">
             <label class="form-check-label" for="flexRadioDefault2">
               Perempuan
             </label>
@@ -215,7 +215,7 @@ if (isset($_POST['submit_btn_modal'])) {
   $tmp_lahir = $_POST['tmp_lahir'];
   $tgl_lahir = $_POST['tgl_lahir'];
   $alamat = $_POST['alamat'];
-  $jenis_kelamin = $_POST['flexRadioDefault'];
+  $jenis_kelamin = $_POST['flexRadio'];
   $status = $_POST['status'];
   $sql = "INSERT INTO tb_guru (nip, nama, pass, tmp_lahir, tgl_lahir, alamat, jenis_kelamin, status, img_profile) VALUES ('$nip', '$nama','$pass', '$tmp_lahir', '$tgl_lahir', '$alamat', '$jenis_kelamin', '$status', 'profile-default.jpg')";
 

@@ -69,24 +69,24 @@ $result_mapel = mysqli_query($connection, $mapel_query); ?>
                             </div>
                             <div class="modal-footer">
                               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                              <button type="submit" class="btn btn-success" name="submit_btn_modal">Simpan Perubahan</button>
+                              <button type="submit" class="btn btn-success" name="submit_edit_modal">Simpan Perubahan</button>
                             </div>
                           </form>
                         </div>
                       </div>
                     </div>
                     <?php
-                    if (isset($_POST['submit_btn_modal'])) {
+                    if (isset($_POST['submit_edit_modal'])) {
                       $kode_lama = $_POST['kode_mapel_lama'];
                       $kode_baru = $_POST['kode_mapel_baru'];
                       $nama_mapel = $_POST['nama_mapel'];
                       $deskripsi = $_POST['deskripsi'];
-                      $sql = "UPDATE tb_mapel SET kode_mapel = '$kode_baru', nama_mapel = '$nama_mapel', deskripsi = '$deskripsi' WHERE `tb_mapel`.`kode_mapel` = '$kode_lama'";
+                      $sql_ubah = "UPDATE tb_mapel SET kode_mapel = '$kode_baru', nama_mapel = '$nama_mapel', deskripsi = '$deskripsi' WHERE `tb_mapel`.`kode_mapel` = '$kode_lama'";
 
-                      if (mysqli_query($connection, $sql)) {
+                      if (mysqli_query($connection, $sql_ubah)) {
                         header("Location:mapel.php");
                       } else {
-                        echo "Error: " . $sql . "<br>" . mysqli_error($connection);
+                        echo "Error: " . $sql_ubah . "<br>" . mysqli_error($connection);
                       }
                     }
                     ?>
