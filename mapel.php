@@ -9,6 +9,7 @@ $result_mapel = mysqli_query($connection, $mapel_query); ?>
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Data Mapel</h1>
   </div>
+  <a href="" data-toggle="modal" data-target="#newSubMenuModal" class=" btn btn-primary mb-4">Tambahkan Mapel Baru</a>
   <div class="card shadow mb-4">
     <div class="card-header py-3">
       <h6 class="m-0 font-weight-bold text-primary">List Mata Pelajaran</h6>
@@ -91,34 +92,16 @@ $result_mapel = mysqli_query($connection, $mapel_query); ?>
                     ?>
 
                     <!-- Delete -->
-                    <a href="hapus_mapel.php?id=<?= $row["kode_mapel"]?>" class="btn btn-danger" onclick="return confirm('Apakah anda yakin?')">Hapus</a>
+                    <a href="hapus_mapel.php?id=<?= $row["kode_mapel"] ?>" class="btn btn-danger" onclick="return confirm('Apakah anda yakin?')">Hapus</a>
 
                   </td>
                 </tr>
-                <?php
-                if (isset($_POST['submit_hapus'])) {
-                  $kode_lama = $_POST['kode_mapel_lama'];
-                  $kode_baru = $_POST['kode_mapel_baru'];
-                  $nama_mapel = $_POST['nama_mapel'];
-                  $deskripsi = $_POST['deskripsi'];
-                  $sql = "DELETE FROM tb_mapel WHERE id=3";
-
-                  if (mysqli_query($connection, $sql)) {
-                    header("Location:mapel.php");
-                  } else {
-                    echo "Error: " . $sql . "<br>" . mysqli_error($connection);
-                  }
-                }
-                ?>
-
             <?php
                 $i++;
               }
             } else {
               echo "Error :" . mysqli_error($connection);
             }
-
-
             ?>
           </tbody>
         </table>
@@ -127,7 +110,50 @@ $result_mapel = mysqli_query($connection, $mapel_query); ?>
   </div>
 </div>
 <!-- /.container-fluid -->
+<!-- Modal -->
+<div class="modal fade" id="newSubMenuModal" tabindex="-1" role="dialog" aria-labelledby="newSubMenuModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="newSubMenuModal">Tambahkan Mapel Baru</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="" method="post">
+        <div class="modal-body">
+          <div class="form-group">
+            <input type="text" class="form-control" id="kode_mapel" name="kode_mapel" placeholder="Masukkan kode Mapel">
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" id="nama_mapel" name="nama_mapel" placeholder="Masukkan nama mapel">
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" id="deskripsi" name="deskripsi" placeholder="Masukkan deskripsi mapel">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary" name="submit_btn_modal">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<?php
+if (isset($_POST['submit_btn_modal'])) {
+  $kode_mapel = $_POST['kode_mapel'];
+  $nama_mapel = $_POST['nama_mapel'];
+  $deskripsi = $_POST['deskripsi'];
+  $sql = "INSERT INTO tb_mapel (kode_mapel, nama_mapel, deskripsi) VALUES ('$kode_mapel', '$nama_mapel','$deskripsi')";
 
+  if (mysqli_query($connection, $sql)) {
+    header("Location:mapel.php");
+  } else {
+    echo "Error: " . $sql . "<br>" . mysqli_error($connection);
+  }
+}
+?>
 </div>
 <!-- End of Main Content -->
 
