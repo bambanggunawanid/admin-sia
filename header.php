@@ -60,7 +60,7 @@ session_start();
 
       <li class="nav-item">
         <form action="" method="POST">
-          <button type="submit" name="logout_btn" class="btn text-white">Logout</button></a>
+          <button type="submit" name="logout_btn" class="btn text-white mx-2">Logout</button></a>
         </form>
 
         <?php
