@@ -14,7 +14,7 @@ if (hapus_guru($nip) > 0) {
     echo "
     <script>
         alert('Data Gagal Di Hapus !');
-        document.location.href = 'index.php';
+        document.location.href = 'guru.php';
     </script>
     ";
     header("Location:guru.php");

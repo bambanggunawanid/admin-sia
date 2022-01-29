@@ -89,6 +89,9 @@ $result_guru = mysqli_query($connection, $guru_query); ?>
             <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama anda">
           </div>
           <div class="form-group">
+            <input type="text" class="form-control" id="password" name="password" placeholder="Password anda">
+          </div>
+          <div class="form-group">
             <input type="text" class="form-control" id="tmp_lahir" name="tmp_lahir" placeholder="Tempat lahir">
           </div>
           <div class="form-group">
@@ -110,7 +113,7 @@ $result_guru = mysqli_query($connection, $guru_query); ?>
             </label>
           </div>
           <div class="form-group">
-            <select name="status" id="status" class="form-control">
+            <select name="status" class="form-control">
               <option value="admin">Admin</option>
               <option value="guru">Guru</option>
               <option value="guru_biasa">Guru biasa</option>
@@ -119,12 +122,32 @@ $result_guru = mysqli_query($connection, $guru_query); ?>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-success" name="submit_btn_modal">Simpan Perubahan</button>
+          <button type="submit" class="btn btn-success" name="submit_edit_modal">Simpan Perubahan</button>
         </div>
       </form>
     </div>
   </div>
 </div>
+<?php
+if (isset($_POST['submit_edit_modal'])) {
+  $nip_lama = $_POST['nip_lama'];
+  $nip_baru = $_POST['nip_baru'];
+  $nama = $_POST['nama'];
+  $pass = $_POST['password'];
+  $tmp_lahir = $_POST['tmp_lahir'];
+  $tgl_lahir = $_POST['tgl_lahir'];
+  $alamat = $_POST['alamat'];
+  $jenis_kelamin = $_POST['flexRadioDefault'];
+  $status = $_POST['status'];
+  $sql = "UPDATE tb_guru SET nip = '$nip_baru', nama = '$nama', pass = '$pass', tmp_lahir = '$tmp_lahir', tgl_lahir = '$tgl_lahir', alamat = '$alamat', jenis_kelamin = '$jenis_kelamin', status='$status' WHERE `tb_guru`.`nip` = '$nip_lama'";
+
+  if (mysqli_query($connection, $sql)) {
+    header("Location:guru.php");
+  } else {
+    echo "Error: " . $sql . "<br>" . mysqli_error($connection);
+  }
+}
+?>
 
 <!-- Modal -->
 <div class="modal fade" id="newSubMenuModal" tabindex="-1" role="dialog" aria-labelledby="newSubMenuModalLabel" aria-hidden="true">
